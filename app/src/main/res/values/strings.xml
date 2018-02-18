@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">JavaQuiz</string>
+    <string name="question_label1">Question 1 of 5</string>
+    <string name="question_label2">Question 2 of 5</string>
+    <string name="question_label3">Question 3 of 5</string>
+    <string name="question_label4">Question 4 of 5</string>
+    <string name="question_label5">Question 5 of 5</string>
+
+    <string name="question1">Which keyword is used to hand over the result of a method?</string>
+    <string name="question1_answer1">break</string>
+    <string name="question1_answer2">return</string>
+    <string name="question1_answer3">else</string>
+
+    <string name="question2">What operator is used to assign a value to a variable?</string>
+    <string name="question2_answer1">&lt;</string>
+    <string name="question2_answer2">&gt;</string>
+    <string name="question2_answer3">=</string>
+
+    <string name="question3">Which variable type represents whole numbers?</string>
+    <string name="question3_answer1">int</string>
+    <string name="question3_answer2">String</string>
+    <string name="question3_answer3">boolean</string>
+
+    <string name="question4">Which statement checks if the variable quantity is smaller than ten?</string>
+    <string name="question4_answer1">if(quantity &gt; 10)</string>
+    <string name="question4_answer2">if(quantity &lt; ten)</string>
+    <string name="question4_answer3">if(quantity &lt; 10)</string>
+
+    <string name="question5">Which variable type represents a sequence of characters?</string>
+    <string name="question5_answer1">int</string>
+    <string name="question5_answer2">long</string>
+    <string name="question5_answer3">String</string>
+
+    <string name="question_label_finish">You finished the Quiz!</string>
+
+    <string name="answer_toast_right">You\'re answer was correct!</string>
+    <string name="answer_toast_wrong">You\'re answer was wrong...</string>
+
+</resources>
