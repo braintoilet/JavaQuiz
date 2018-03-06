@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">JavaQuiz</string>
-    <string name="question_label1">Question 1 of 5</string>
-    <string name="question_label2">Question 2 of 5</string>
-    <string name="question_label3">Question 3 of 5</string>
-    <string name="question_label4">Question 4 of 5</string>
-    <string name="question_label5">Question 5 of 5</string>
+    <string name="question_label1">Question 1 of 7</string>
+    <string name="question_label2">Question 2 of 7</string>
+    <string name="question_label3">Question 3 of 7</string>
+    <string name="question_label4">Question 4 of 7</string>
+    <string name="question_label5">Question 5 of 7</string>
+    <string name="question_label6">Question 6 of 7</string>
+    <string name="question_label7">Question 7 of 7</string>
 
     <string name="question1">Which keyword is used to hand over the result of a method?</string>
     <string name="question1_answer1">break</string>
@@ -30,6 +32,14 @@
     <string name="question5_answer1">int</string>
     <string name="question5_answer2">long</string>
     <string name="question5_answer3">String</string>
+
+    <string name="question6">Which of the following statements evaluate to TRUE?</string>
+    <string name="question6_answer1">0</string>
+    <string name="question6_answer2">true</string>
+    <string name="question6_answer3">1</string>
+
+    <string name="question7">Which variable type represents decimal numbers?</string>
+    <string name="question7_answer">float</string>
 
     <string name="question_label_finish">You finished the Quiz!</string>
 

@@ -2,34 +2,34 @@ package com.example.android.javaquiz;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.xml.datatype.Duration;
 
 public class MainActivity extends AppCompatActivity {
 
-    int currentQuestion = 1;
     int correctAnswers = 0;
-    int wrongAnswers = 0;
     boolean reset = false; //if set true, submitButton will reset quiz
 
-    TextView questionLabel;
-    TextView questionText;
-    RadioGroup answerGroup;
-    RadioButton answer1;
-    RadioButton answer2;
-    RadioButton answer3;
+    RadioGroup answersGroup1;
+    RadioGroup answersGroup2;
+    RadioGroup answersGroup3;
+    RadioGroup answersGroup4;
+    RadioGroup answersGroup5;
+    CheckBox checkBox1;
+    CheckBox checkBox2;
+    CheckBox checkBox3;
+    EditText answerEdit;
     Button submitButton;
+    TextView quizResultText;
 
 
     @Override
@@ -37,15 +37,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        questionLabel = (TextView) findViewById(R.id.question_label);
-        questionText = (TextView) findViewById(R.id.question);
-        answerGroup = (RadioGroup) findViewById(R.id.answers_group);
-        answer1 = (RadioButton) findViewById(R.id.answer1);
-        answer2 = (RadioButton) findViewById(R.id.answer2);
-        answer3 = (RadioButton) findViewById(R.id.answer3);
+        //Initialize views
+        answersGroup1 = (RadioGroup) findViewById(R.id.answers_group1);
+        answersGroup2 = (RadioGroup) findViewById(R.id.answers_group2);
+        answersGroup3 = (RadioGroup) findViewById(R.id.answers_group3);
+        answersGroup4 = (RadioGroup) findViewById(R.id.answers_group4);
+        answersGroup5 = (RadioGroup) findViewById(R.id.answers_group5);
+        checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
+        checkBox1 = (CheckBox) findViewById(R.id.checkBox1);
+        checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
+        checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
+        answerEdit = (EditText) findViewById(R.id.answerEdit);
         submitButton = (Button) findViewById(R.id.submitButton);
-
-        setQuestion();
+        quizResultText = (TextView) findViewById(R.id.quiz_result_text);
     }
 
     /***
@@ -57,147 +61,119 @@ public class MainActivity extends AppCompatActivity {
         if(reset)
             resetQuiz();
 
-        int selection = answerGroup.getCheckedRadioButtonId();
-        answerGroup.clearCheck();
+        //check if at least one checkbox is checked
+        int checkedCheckBoxNum = 0;
+        if(checkBox1.isChecked())
+            checkedCheckBoxNum++;
+        else if (checkBox2.isChecked())
+            checkedCheckBoxNum++;
+        else if (checkBox3.isChecked())
+            checkedCheckBoxNum++;
 
-        if(selection == -1)
+        //if not all questions answered: return
+        if(answersGroup1.getCheckedRadioButtonId() == -1 ||
+                answersGroup2.getCheckedRadioButtonId() == -1 ||
+                answersGroup3.getCheckedRadioButtonId() == -1 ||
+                answersGroup4.getCheckedRadioButtonId() == -1 ||
+                answersGroup5.getCheckedRadioButtonId() == -1 ||
+                checkedCheckBoxNum == 0 ||
+                answerEdit.getText().toString().equals("")){
+            Toast toast = Toast.makeText(this,"Please answer all Questions before submitting.", Toast.LENGTH_LONG);
+            toast.show();
             return;
-
-        switch(currentQuestion){
-            case 1:
-                if(selection == R.id.answer2){
-                    Toast toast = Toast.makeText(this, R.string.answer_toast_right, Toast.LENGTH_LONG);
-                    toast.show();
-                    correctAnswers++;
-                } else {
-                    Toast toast = Toast.makeText(this, R.string.answer_toast_wrong, Toast.LENGTH_LONG);
-                    toast.show();
-                    wrongAnswers++;
-                }
-                break;
-
-            case 2:
-                if(selection == R.id.answer3){
-                    Toast toast = Toast.makeText(this, R.string.answer_toast_right, Toast.LENGTH_LONG);
-                    toast.show();
-                    correctAnswers++;
-                } else {
-                    Toast toast = Toast.makeText(this, R.string.answer_toast_wrong, Toast.LENGTH_LONG);
-                    toast.show();
-                    wrongAnswers++;
-                }
-                break;
-
-            case 3:
-                if(selection == R.id.answer1){
-                    Toast toast = Toast.makeText(this, R.string.answer_toast_right, Toast.LENGTH_LONG);
-                    toast.show();
-                    correctAnswers++;
-                } else {
-                    Toast toast = Toast.makeText(this, R.string.answer_toast_wrong, Toast.LENGTH_LONG);
-                    toast.show();
-                    wrongAnswers++;
-                }
-                break;
-
-            case 4:
-                if(selection == R.id.answer3){
-                    Toast toast = Toast.makeText(this, R.string.answer_toast_right, Toast.LENGTH_LONG);
-                    toast.show();
-                    correctAnswers++;
-                } else {
-                    Toast toast = Toast.makeText(this, R.string.answer_toast_wrong, Toast.LENGTH_LONG);
-                    toast.show();
-                    wrongAnswers++;
-                }
-                break;
-
-            case 5:
-                if(selection == R.id.answer3){
-                    Toast toast = Toast.makeText(this, R.string.answer_toast_right, Toast.LENGTH_LONG);
-                    toast.show();
-                    correctAnswers++;
-                } else {
-                    Toast toast = Toast.makeText(this, R.string.answer_toast_wrong, Toast.LENGTH_LONG);
-                    toast.show();
-                    wrongAnswers++;
-                }
-                break;
         }
 
-        currentQuestion++;
-        setQuestion();
-    }
+        // Correct Answers:
+        // Q1: A2
+        // Q2: A3
+        // Q3: A1
+        // Q4: A3
+        // Q5: A3
+        // Q6: A2 + A3
+        // Q7: float
 
-    /***
-     * Shows the current question and answers
-     */
-    private void setQuestion(){
-        switch (currentQuestion){
-            case 1:
-                questionLabel.setText(R.string.question_label1);
-                questionText.setText(R.string.question1);
-                //number2 is right
-                answer1.setText(R.string.question1_answer1);
-                answer2.setText(R.string.question1_answer2);
-                answer3.setText(R.string.question1_answer3);
-                break;
-            case 2:
-                questionLabel.setText(R.string.question_label2);
-                questionText.setText(R.string.question2);
-                //number3 is right
-                answer1.setText(R.string.question2_answer1);
-                answer2.setText(R.string.question2_answer2);
-                answer3.setText(R.string.question2_answer3);
-                break;
-            case 3:
-                questionLabel.setText(R.string.question_label3);
-                questionText.setText(R.string.question3);
-                //number1 is right
-                answer1.setText(R.string.question3_answer1);
-                answer2.setText(R.string.question3_answer2);
-                answer3.setText(R.string.question3_answer3);
-                break;
-            case 4:
-                questionLabel.setText(R.string.question_label4);
-                questionText.setText(R.string.question4);
-                //number3 is right
-                answer1.setText(R.string.question4_answer1);
-                answer2.setText(R.string.question4_answer2);
-                answer3.setText(R.string.question4_answer3);
-                break;
-            case 5:
-                questionLabel.setText(R.string.question_label5);
-                questionText.setText(R.string.question5);
-                //number3 is right
-                answer1.setText(R.string.question5_answer1);
-                answer2.setText(R.string.question5_answer2);
-                answer3.setText(R.string.question5_answer3);
-                break;
-            case 6:
-                //Show Result
-                questionLabel.setText(R.string.question_label_finish);
-                String resume = "You got " + correctAnswers + " of 5 questions right!\n";
-                resume += "Nice Job!";
-                questionText.setText(resume);
-                answerGroup.setVisibility(View.GONE);
-                submitButton.setText("Reset");
-                reset = true;
-                break;
+        //Check question 1
+        int radioButtonID = answersGroup1.getCheckedRadioButtonId();
+        View radioButton = answersGroup1.findViewById(radioButtonID);
+        int idx = answersGroup1.indexOfChild(radioButton);
+
+        if(idx == 1)
+            correctAnswers++;
+
+        //Check question 2
+        radioButtonID = answersGroup2.getCheckedRadioButtonId();
+        radioButton = answersGroup2.findViewById(radioButtonID);
+        idx = answersGroup2.indexOfChild(radioButton);
+
+        if(idx == 2)
+            correctAnswers++;
+
+        //Check question 3
+        radioButtonID = answersGroup3.getCheckedRadioButtonId();
+        radioButton = answersGroup3.findViewById(radioButtonID);
+        idx = answersGroup3.indexOfChild(radioButton);
+
+        if(idx == 0)
+            correctAnswers++;
+
+        //Check question 4
+        radioButtonID = answersGroup4.getCheckedRadioButtonId();
+        radioButton = answersGroup4.findViewById(radioButtonID);
+        idx = answersGroup4.indexOfChild(radioButton);
+
+        if(idx == 2)
+            correctAnswers++;
+
+
+        //Check question 5
+        radioButtonID = answersGroup5.getCheckedRadioButtonId();
+        radioButton = answersGroup5.findViewById(radioButtonID);
+        idx = answersGroup5.indexOfChild(radioButton);
+
+        if(idx == 2)
+            correctAnswers++;
+
+
+        //Check question 6
+        if(checkBox2.isChecked() && checkBox3.isChecked())
+            correctAnswers++;
+
+
+        //Check question 7
+        String txt = answerEdit.getText().toString();
+        if(txt.equals("float") ||
+                txt.equals("float ") ||
+                txt.equals("Float") ||
+                txt.equals("Float ")) {
+            correctAnswers++;
         }
-    }
 
+        //Display Result and set reset to true
+        submitButton.setText("Reset");
+        quizResultText.setText("You got " + correctAnswers + " of 7 questions right.");
+        reset = true;
+
+    }
 
     /***
      * resets the quiz
      */
     public void resetQuiz(){
-        answerGroup.setVisibility(View.VISIBLE);
-        answerGroup.clearCheck();
+        //Reset all the Views
+        answersGroup1.clearCheck();
+        answersGroup2.clearCheck();
+        answersGroup3.clearCheck();
+        answersGroup4.clearCheck();
+        answersGroup5.clearCheck();
+
+        checkBox1.setChecked(false);
+        checkBox2.setChecked(false);
+        checkBox3.setChecked(false);
+
+        answerEdit.setText("");
+        quizResultText.setText("");
         submitButton.setText("Submit");
-        currentQuestion = 1;
         correctAnswers = 0;
         reset = false;
-        setQuestion();
     }
 }
