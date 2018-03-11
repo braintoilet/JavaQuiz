@@ -135,22 +135,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Check question 6
-        if(checkBox2.isChecked() && checkBox3.isChecked())
+        if(!checkBox1.isChecked() && checkBox2.isChecked() && checkBox3.isChecked())
             correctAnswers++;
 
 
         //Check question 7
-        String txt = answerEdit.getText().toString();
-        if(txt.equals("float") ||
-                txt.equals("float ") ||
-                txt.equals("Float") ||
-                txt.equals("Float ")) {
+        String txt = answerEdit.getText().toString().trim();
+        if(txt.equalsIgnoreCase("float"))
             correctAnswers++;
-        }
 
-        //Display Result and set reset to true
-        submitButton.setText("Reset");
+        //Display Result
         quizResultText.setText("You got " + correctAnswers + " of 7 questions right.");
+        Toast resultToast = Toast.makeText(this, "You got " + correctAnswers + " of 7 questions right.", Toast.LENGTH_LONG);
+        resultToast.show();
+
+        //Set to reset mode
+        submitButton.setText("Reset");
         reset = true;
 
     }
